@@ -11,17 +11,43 @@ const Button = (props) => {
   )
 }
 
+const StatsLine = (props) => {
+  return(
+    <li>{props.text} {props.value}{props.percent} </li>
+  )
+}
+
 const Stats = ({good, neutral, bad}) => {
+
+  const all = (good + neutral + bad)
+  const average = (good - bad) / (bad + neutral + good)
+  const positive = (good / (bad + neutral + good) * 100)
+    
 
   if (good + neutral + bad === 0){
     return(
-      <p>No feed back given</p>
+      <p>No feedback given</p>
     )
   }
-
   else
   return(
     <div>
+     <StatsLine text='good' value={good} />
+     <StatsLine text='neutral' value={neutral} />
+     <StatsLine text='bad' value={bad} />
+     <StatsLine text='all' value={all} />
+     <StatsLine text='average' value={average}/>
+     <StatsLine text='positive' value={positive}percent='%' />
+
+    </div>
+  )
+
+}
+/*
+  else
+  return(
+    <div>
+      <StatsLine text='good' value={good} />
       <li>good {good}</li>
       <li>neutral {neutral}</li>
       <li>bad {bad}</li>
@@ -32,7 +58,7 @@ const Stats = ({good, neutral, bad}) => {
     
   )
 }
-
+*/
 const App = () => {
   // tallenna napit omaan tilaansa
   const [good, setGood] = useState(0)
