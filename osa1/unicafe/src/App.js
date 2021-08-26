@@ -13,7 +13,9 @@ const Button = (props) => {
 
 const StatsLine = (props) => {
   return(
-    <li>{props.text} {props.value}{props.percent} </li>
+    <tr> {props.text} 
+      <td> {props.value}{props.percent}</td>
+    </tr>
   )
 }
 
@@ -36,39 +38,34 @@ const Stats = ({good, neutral, bad}) => {
      <StatsLine text='neutral' value={neutral} />
      <StatsLine text='bad' value={bad} />
      <StatsLine text='all' value={all} />
-     <StatsLine text='average' value={average}/>
-     <StatsLine text='positive' value={positive}percent='%' />
+     <StatsLine text='average' value= {average}/>
+     <StatsLine text='positive' value= {positive} percent='%' />
 
     </div>
   )
 
 }
-/*
-  else
-  return(
-    <div>
-      <StatsLine text='good' value={good} />
-      <li>good {good}</li>
-      <li>neutral {neutral}</li>
-      <li>bad {bad}</li>
-      <li>all {bad + neutral + good}</li>
-      <li>average {(good - bad) / (bad + neutral + good)}</li>
-      <li>positive {good / (bad + neutral + good)*100} %</li>
-    </div>
-    
-  )
-}
-*/
+
 const App = () => {
   // tallenna napit omaan tilaansa
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+  const [allClicks, setAll] = useState([])
   
-
-  const plusGood = () => setGood(good + 1)
-  const plusNeutral = () => setNeutral(neutral + 1)
-  const plusBad = () => setBad(bad + 1)
+  const plusGood = () => {
+    setAll(allClicks.concat('G'))
+    setGood(good + 1)
+  }
+  const plusNeutral = () => {
+    setAll(allClicks.concat('N'))
+    setNeutral(neutral + 1)
+  }
+  const plusBad = () => {
+    setAll(allClicks.concat('B'))
+    setBad(bad + 1)
+  }
+  console.log(allClicks)
 
   return (
     <div>
