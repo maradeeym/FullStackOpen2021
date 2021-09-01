@@ -32,14 +32,19 @@ const [points, setPoints] = useState(new Array(7).fill(0))
     setPoints(copy)
   }
 
-  console.log(points)
+  //const mostVotes = Math.max(points)
+  console.log(Math.max(...points))
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <p>{anecdotes[selected]}</p>
       <p> has {points[selected]} votes</p>
       <Button handleClick={randomInt} text='next anecdote' />
       <Button handleClick={givePoints} text='vote' />
+      <h2>Anecdote with the most votes</h2>
+      <p> {anecdotes[points.indexOf(Math.max(...points))]} has {Math.max(...points)} points </p>
+
     </div>
   )
 }
