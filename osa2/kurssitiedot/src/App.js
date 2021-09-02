@@ -29,10 +29,23 @@ const App = () => {
       )
     }
 
+    const Total = () => {
+      const totalExercises = props.course.parts.map(part => part.exercises)
+      const sum = (acc, currentValue) => acc + currentValue;
+      return(
+        <div>
+          <ul>
+           <b> total of {totalExercises.reduce(sum)} exercises </b>
+          </ul>
+        </div>
+      )
+    }
+
       return (
         <div>
        <Header />
        <Content />
+       <Total />
        </div>
       )
     
