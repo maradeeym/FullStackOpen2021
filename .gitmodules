@@ -1,0 +1,3 @@
+[submodule "osa2/osa2/kurssitiedot"]
+	path = osa2/osa2/kurssitiedot
+	url = https://github.com/maradeeym/FullStackOpen2021
