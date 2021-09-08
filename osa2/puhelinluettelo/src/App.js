@@ -1,4 +1,8 @@
 import React, { useState } from 'react'
+import Persons from './components/Persons'
+import Filter from './components/Filter'
+import PersonForm from './components/PersonForm'
+
 
 const App = () => {
   const [ persons, setPersons] = useState([
@@ -11,26 +15,6 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ findName, setFinder ] = useState('')
-
-  const personsToShow = persons.filter(person => person.name.toLowerCase().includes(findName))
-  console.log(personsToShow)
-
-  const Filter = () => {
-  const isBelowThreshold = (currentValue) => currentValue === 0;
-  const person = persons.map(contact => contact.name.toLowerCase().indexOf(findName))
-  console.log(person)
-  console.log(person.every(isBelowThreshold))
-
-  const filterIt = personsToShow.map(contact => <ul key={contact.id}>{contact.name} {contact.number}</ul> )
-  if(person.every(isBelowThreshold) === true)
-  return(
-  <p>Search something</p>
-  )
-  else
-  return(
-  <>{filterIt}</>
-  )
-  }
 
   const addNote = (event) => {
     event.preventDefault()
@@ -62,34 +46,17 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={addNote}>
-      <div>
-          filter shown with: <input 
-          value={findName}
-          onChange={handleFinderChange}
-          />
-        </div>
-      </form>
-        <h2>add new</h2>
-        <form onSubmit={addNote}>
-        <div>
-          name: <input 
-          value={newName}
-          onChange={handleNameChange}
-          />
-        </div>
-        <div>
-          number: <input
-          value={newNumber}
-          onChange={handleNumberChange}
-          />
-          </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      <Filter />
+      <Filter findName={findName} handleFinderChange={handleFinderChange} />
+        <h3>add a new</h3>
+      <PersonForm 
+      addNote={addNote}
+      newName={newName}
+      handleNameChange={handleNameChange}
+      newNumber={newNumber}
+      handleNumberChange={handleNumberChange}
+      />
+      <h3>Numbers</h3>
+      <Persons persons={persons} findName={findName} />
     </div>
   )
 
