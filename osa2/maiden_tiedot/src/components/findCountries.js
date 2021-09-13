@@ -28,9 +28,8 @@ const FindCountries = ({countries, findCountry, handleClick}) => {
         return(
     <>
         {countriesToShow.map(country =>
-        <p key={country.id}>
-           <CountryName country={country} handleClick={handleClick} />
-        </p> )}
+           <CountryName country={country} handleClick={handleClick} key={country.name} />
+        )}
     </>
         )    
     }
@@ -38,7 +37,7 @@ const FindCountries = ({countries, findCountry, handleClick}) => {
     return(
         <div>
         
-            {countriesToShow.map((country, i) => <Country country={country} key={country.name}/>)}
+            {countriesToShow.map(country => <Country country={country} key={country.name}/>)}
         
         </div>
     )    

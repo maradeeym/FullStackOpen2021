@@ -21,7 +21,7 @@ import React from 'react'
 
   const Languages = ({country}) => {
     const rows = () => country.map((language) =>
-    <Language language={language} key={language.id}/>)
+    <Language language={language} key={language.name}/>)
     return (
         <>
             {rows()}
