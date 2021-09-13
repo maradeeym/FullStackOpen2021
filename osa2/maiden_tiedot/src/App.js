@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import Country from './components/Country'
 import FindCountries from './components/findCountries'
 
 const Filter = (props) => { 
@@ -32,16 +31,19 @@ const App = () => {
       })
   }, [])
 
-  console.log(countries)
 
   const handleFinderChange = (event) => {
     setFindCountry(event.target.value)
   }
 
+  const handleClick = (countryName) => {
+    setFindCountry(countryName)
+  }
+
   return (
     <div>
       <Filter findCountry={findCountry} handleFinderChange={handleFinderChange} />
-      <FindCountries countries={countries} findCountry={findCountry}/>
+      <FindCountries countries={countries} findCountry={findCountry} handleClick={handleClick}/>
     </div>
   );
 }
