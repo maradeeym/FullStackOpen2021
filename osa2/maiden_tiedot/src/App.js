@@ -19,18 +19,32 @@ const App = () => {
 
   const [countries, setCountries] = useState([])
   const [findCountry, setFindCountry] = useState('')
-
+  const [weather, setWeather] = useState('')
 
   useEffect(() => {
     console.log('effect')
-    axios
-      .get('https://restcountries.eu/rest/v2/all')
-      .then(response => {
+    axios.get('https://restcountries.eu/rest/v2/all').then(response => {
+      if(findCountry !== ''){
+      const countriesToShow = response.data.filter(country => country.name.toLowerCase().includes(findCountry.toLowerCase()))
         console.log('promise fulfilled')
-        setCountries(response.data)
+        setCountries(countriesToShow)
+      }
       })
-  }, [])
+  }, [findCountry])
 
+  useEffect(() => {
+    const baseUrl = "http://api.weatherapi.com/v1/current.json";
+    const ACCESS_KEY = process.env.REACT_APP_API_KEY;
+    if(countries.length === 1){
+    const capital = countries.map(country => country.capital)
+      if(capital[0]){
+        axios.get(`${baseUrl}?key=${ACCESS_KEY}&q=${capital[0]}&aqi=no`)
+          .then(response => {
+            console.log('toimii')
+            setWeather(response.data);
+          })}};}, [countries]);
+
+          console.log(weather)
 
   const handleFinderChange = (event) => {
     setFindCountry(event.target.value)
@@ -43,7 +57,7 @@ const App = () => {
   return (
     <div>
       <Filter findCountry={findCountry} handleFinderChange={handleFinderChange} />
-      <FindCountries countries={countries} findCountry={findCountry} handleClick={handleClick}/>
+      <FindCountries countries={countries} findCountry={findCountry} handleClick={handleClick} weather={weather}/>
     </div>
   );
 }

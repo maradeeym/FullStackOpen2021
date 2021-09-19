@@ -1,50 +1,42 @@
 import React from 'react'
 import Country from './Country'
+import CountryName from './CountryName'
+import Weather from './Weather'
 
-const CountryName = ({ country, handleClick }) => (
-    <div>
-      {country.name}
-      <button onClick={() => handleClick(country.name.toLowerCase())}>
-        Show
-      </button>
-    </div>
-  );
-
-const FindCountries = ({countries, findCountry, handleClick}) => {
+const FindCountries = ({countries, findCountry, handleClick, weather}) => {
     
     const countriesToShow = countries.filter(country => country.name.toLowerCase().includes(findCountry))
-    const isBelowThreshold = (currentValue) => currentValue === 0;
-    const country = countries.map(names => names.name.toLowerCase().indexOf(findCountry))
-    //const filterNames = countriesToShow.map(names => <ul key={names.id}>{names.name} <button type="submit" value="Finland" onClick="finland">Show</button></ul> )
-    const filterIt = countriesToShow.map((country, i) => <Country country={country} key={country.name}/>)
-    console.log(countriesToShow)
-
-    if(country.filter(country => country > -1) && country.every(isBelowThreshold) === false && filterIt.length > 10){
+    const filterIt = countriesToShow.map((country) => <Country country={country} key={country.name}/>)
+    console.log(findCountry)
+    
+    if(findCountry === ''){
+        return(
+            <p>Search something</p>
+        )
+    }
+    
+    if(countriesToShow.length > 10){
         return(
     <p>too many matches, specify another filter</p>
         )
     }
-    else if(country.filter(country => country > -1) && country.every(isBelowThreshold) === false && filterIt.length > 1){
-        return(
-    <>
-        {countriesToShow.map(country =>
-           <CountryName country={country} handleClick={handleClick} key={country.name} />
-        )}
-    </>
-        )    
-    }
-    else if(country.filter(country => country > -1) && country.every(isBelowThreshold) === false && filterIt.length < 2){
+    else if(countriesToShow.length === 1)
     return(
-        <div>
-        
-            {countriesToShow.map(country => <Country country={country} key={country.name}/>)}
-        
-        </div>
-    )    
-    }
+        <>
+        {filterIt}
+        <Weather weather={weather}/>
+        </>
+    )
+    else if(countriesToShow.length < 6 && countriesToShow.length > 1)
+    return(
+    <div>
+    {countriesToShow.map(country =>
+           <CountryName country={country} handleClick={handleClick} key={country.name}/>)}
+    </div>
+    )
     else
     return(
-    <p>Search something</p>    
+        <></> 
     )
     }
 

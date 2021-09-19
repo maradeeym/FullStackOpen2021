@@ -1,11 +1,12 @@
 import React from 'react'
 
+
   const Name = ({country}) => {
     return(
     <div>
         <h2>{country.name}</h2>
-        <p>capital {country.capital}</p>
-        <p>population {country.population}</p> 
+        <p>capital: {country.capital}</p>
+        <p>population: {country.population}</p> 
     </div>
     )
   }
