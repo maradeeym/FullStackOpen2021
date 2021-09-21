@@ -8,8 +8,8 @@ const Persons = ({persons, findName}) => {
     const person = persons.map(contact => contact.name.toLowerCase().indexOf(findName))
     console.log(person)
     console.log(person.every(isBelowThreshold))
-  
     const filterIt = personsToShow.map(contact => <ul key={contact.id}>{contact.name} {contact.number}</ul> )
+    console.log('Persons')
     if(person.every(isBelowThreshold) === true)
     return(
     <p>Search something</p>

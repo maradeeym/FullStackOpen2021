@@ -1,18 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import Persons from './components/Persons'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 
 
 const App = () => {
-  const [ persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456', id: 1},
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2},
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3},
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4}
-  ])
+  const [ persons, setPersons] = useState([])
+  const [ newName, setNewName ] = useState('')
+  const [ newNumber, setNewNumber ] = useState('')
+  const [ findName, setFinder ] = useState('')
 
   useEffect(() => {
     console.log('effect')
@@ -20,17 +17,17 @@ const App = () => {
       .get('http://localhost:3001/persons')
       .then(response => {
         console.log('promise fulfilled')
+        console.log(response)
         setPersons(response.data)
       })
   }, [])
+
   console.log('render', persons.length, 'persons')
+  console.log(persons)
 
-  const [ newName, setNewName ] = useState('')
-  const [ newNumber, setNewNumber ] = useState('')
-  const [ findName, setFinder ] = useState('')
-
-  const addNote = (event) => {
+  const addPerson = (event) => {
     event.preventDefault()
+    console.log('button', event.target)
     const nameObject = {
       name: newName,
       number: newNumber,
@@ -39,20 +36,28 @@ const App = () => {
     if(persons.find(names => names.name === newName))
     window.alert(`${newName} is already added to phonebook`)
     else
-    setPersons(persons.concat(nameObject))
+    axios
+    .post('http://localhost:3001/persons', nameObject)
+    .then(response => {
+      console.log(response)
+    setPersons(persons.concat(response.data))
     setNewName('')
     setNewNumber('')
+  })
   }
 
   const handleNameChange = (event) => {
+    console.log(event.target.value)
     setNewName(event.target.value)
   }
 
   const handleFinderChange = (event) => {
+    console.log(event.target.value)
     setFinder(event.target.value)
   }
 
   const handleNumberChange = (event) => {
+    console.log(event.target.value)
     setNewNumber(event.target.value)
   }
 
@@ -62,7 +67,7 @@ const App = () => {
       <Filter findName={findName} handleFinderChange={handleFinderChange} />
         <h3>add a new</h3>
       <PersonForm 
-      addNote={addNote}
+      addPerson={addPerson}
       newName={newName}
       handleNameChange={handleNameChange}
       newNumber={newNumber}

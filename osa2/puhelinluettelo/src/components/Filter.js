@@ -1,6 +1,7 @@
 import React from 'react'
 
 const Filter = ({findName, handleFinderChange}) => { 
+    console.log('Filter')
     return(
     <form>
         <div>
