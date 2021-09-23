@@ -3,6 +3,8 @@ import Persons from './components/Persons'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import personList from './services/PersonList'
+import PersonList from './services/PersonList'
+
 
 
 
@@ -20,8 +22,6 @@ const App = () => {
         setPersons(initialPersons)
       })
   }, [])
-
-console.log(personList)
 
   console.log('render', persons.length, 'persons')
   console.log(persons)
@@ -62,6 +62,16 @@ console.log(personList)
     setNewNumber(event.target.value)
   }
 
+  const handleClick = (id) => {
+    PersonList
+      .remove(id)
+      .then(removedPerson => {
+      setPersons(persons.splice(removedPerson))
+      setFinder('')
+      })
+    
+    }
+    
   return (
     <div>
       <h2>Phonebook</h2>
@@ -75,7 +85,7 @@ console.log(personList)
       handleNumberChange={handleNumberChange}
       />
       <h3>Numbers</h3>
-      <Persons persons={persons} findName={findName} />
+      <Persons persons={persons} findName={findName} handleClick={handleClick} />
     </div>
   )
 
