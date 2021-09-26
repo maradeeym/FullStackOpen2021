@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
+import './index.css'
 import Persons from './components/Persons'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
-import personList from './services/PersonList'
 import PersonList from './services/PersonList'
-
+import Notification from './components/Notification'
 
 
 
@@ -13,18 +13,18 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ findName, setFinder ] = useState('')
+  const [message, setMessage] = useState(null)
+  const [messageType, SetMessageType] = useState(null)
+
 
   useEffect(() => {
-    personList
+    PersonList
       .getAll()
       .then(initialPersons => {
         console.log('promise fulfilled')
         setPersons(initialPersons)
       })
   }, [])
-
-  console.log('render', persons.length, 'persons')
-  console.log(persons)
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -34,19 +34,36 @@ const App = () => {
       number: newNumber,
       id: persons.length + 1,
     }
-    if(persons.find(names => names.name === newName))
-    window.alert(`${newName} is already added to phonebook`)
+    if(persons.find(names => names.name === newName)) {
+      if(window.confirm(`${newName} is already added to phonebook, replace hte old number with a new one?`)) {
+        const personToUpdate = persons.find(person => person.name.toLowerCase() === newName.toLowerCase())
+        PersonList
+        .update(personToUpdate.id, { name: newName, number: newNumber})
+        .then(response => {
+          setPersons(persons.map(person => person.id !== personToUpdate.id ? person : response.data))
+        })
+        setNewName('')
+        setNewNumber('')
+        console.log('täällä')
+      }
+    }
     else
-    personList
+    PersonList
     .create(nameObject)
     .then(returnedPerson => {
       console.log(returnedPerson)
     setPersons(persons.concat(returnedPerson))
     setNewName('')
     setNewNumber('')
-  })
+    setMessage(`Succesfully added ${newName}`)
+    SetMessageType('success')
+    setTimeout(() => {
+      setMessage(null)
+      SetMessageType(null)
+    }, 5000)
+    }
+  )
   }
-
   const handleNameChange = (event) => {
     console.log(event.target.value)
     setNewName(event.target.value)
@@ -63,18 +80,26 @@ const App = () => {
   }
 
   const handleClick = (id) => {
+    const personToRemove = persons.find(person => person.id === id)
     PersonList
       .remove(id)
       .then(removedPerson => {
+        console.log(removedPerson)
       setPersons(persons.splice(removedPerson))
       setFinder('')
+      setMessage(`Succesfully removed ${personToRemove.name}`)
+      SetMessageType('success')
+      setTimeout(() => {
+        setMessage(null)
+        SetMessageType(null)
+      }, 5000)
       })
-    
     }
     
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} className={messageType} />
       <Filter findName={findName} handleFinderChange={handleFinderChange} />
         <h3>add a new</h3>
       <PersonForm 
