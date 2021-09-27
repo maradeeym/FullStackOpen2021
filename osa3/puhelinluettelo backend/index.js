@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 
+app.use(express.json())
+
 let persons = [
       {
         id: 1,
@@ -25,12 +27,12 @@ let persons = [
     ]
 /*
     const person = {
-      name: body.content,
-      important: body.important || false,
-      date: new Date(),
-      id: generateId(),
+      id: generateId(), 
+      name: body.name,
+      number: body.number
     }
 */
+
 let time = new Date()
 
     app.get('/', (req, res) => {
@@ -45,7 +47,7 @@ let time = new Date()
       const id = Number(req.params.id)
       const person = persons.find(person => person.id === id)
       if(person){
-      res.json(persons.map(person => person.name))}
+      res.json(person)}
       else{
         res.status(404).end()
       }
@@ -61,10 +63,34 @@ let time = new Date()
         res.send('<p>Phonebook has info for '+ persons.length + ' people </p> <p>'+time +'</p>')
       })
 
-    
+      const generateId = () => {
+        const maxId = persons.length > 0
+          ? Math.max(...persons.map(n => n.id))
+          : 0
+        return maxId + 1
+      }
+      
+      app.post('/api/persons', (req, res) => {
+        const body = req.body
+        console.log(body)
+        if (!body.name) {
+          return res.status(400).json({ 
+            error: 'content missing' 
+          })
+        }
+      
+        const person = {
+          name: body.name,
+          number: body.number,
+          id: generateId()
+        }
+      
+        persons = persons.concat(person)
+      
+        res.json(person)
+      })
 
-      console.log(time)
-
+  
 const PORT = 3001
 app.listen(PORT)
 console.log(`Server running on port ${PORT}`)
