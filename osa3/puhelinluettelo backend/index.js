@@ -25,13 +25,6 @@ let persons = [
         number: "39-23-6423122",
       }
     ]
-/*
-    const person = {
-      id: generateId(), 
-      name: body.name,
-      number: body.number
-    }
-*/
 
 let time = new Date()
 
@@ -73,12 +66,15 @@ let time = new Date()
       app.post('/api/persons', (req, res) => {
         const body = req.body
         console.log(body)
-        if (!body.name) {
+        if (!body.name || !body.number) {
           return res.status(400).json({ 
             error: 'content missing' 
           })
         }
-      
+        else if(persons.find(person => person.name === body.name)){
+          return res.status(400).json({ error: 'name must be unique' })
+        }
+        else{
         const person = {
           name: body.name,
           number: body.number,
@@ -86,9 +82,10 @@ let time = new Date()
         }
       
         persons = persons.concat(person)
-      
+        console.log(persons.filter(person => person.name === body.name))
+
         res.json(person)
-      })
+      }})
 
   
 const PORT = 3001
