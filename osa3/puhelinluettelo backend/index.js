@@ -1,7 +1,13 @@
 const express = require('express')
 const app = express()
+const morgan = require('morgan')
+
+morgan.token('body', (req, res) => JSON.stringify(req.body));
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body '));
 
 app.use(express.json())
+
+
 
 let persons = [
       {
@@ -32,6 +38,10 @@ let time = new Date()
         res.send('<h1>Hello World!</h1>')
       })
 
+      app.listen(3000, () => {
+        console.log('App listening port 3000 ......')
+      })
+
       app.get('/api/persons', (req, res) => {
         res.json(persons)
       })  
@@ -41,7 +51,7 @@ let time = new Date()
       const person = persons.find(person => person.id === id)
       if(person){
       res.json(person)}
-      else{
+      else {
         res.status(404).end()
       }
       })
@@ -65,7 +75,6 @@ let time = new Date()
       
       app.post('/api/persons', (req, res) => {
         const body = req.body
-        console.log(body)
         if (!body.name || !body.number) {
           return res.status(400).json({ 
             error: 'content missing' 
@@ -82,7 +91,6 @@ let time = new Date()
         }
       
         persons = persons.concat(person)
-        console.log(persons.filter(person => person.name === body.name))
 
         res.json(person)
       }})
