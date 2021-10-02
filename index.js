@@ -7,6 +7,8 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :b
 
 app.use(express.json())
 
+app.use(express.static('build'))
+
 const cors = require('cors')
 
 app.use(cors())
@@ -39,11 +41,11 @@ let time = new Date()
     app.get('/', (req, res) => {
         res.send('<h1>Hello World!</h1>')
       })
-
+/*
       app.listen(3001, () => {
         console.log('App listening port 3000 ......')
       })
-
+*/
       app.get('/api/persons', (req, res) => {
         res.json(persons)
       })  
