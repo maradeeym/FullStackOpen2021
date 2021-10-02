@@ -39,11 +39,11 @@ let time = new Date()
     app.get('/', (req, res) => {
         res.send('<h1>Hello World!</h1>')
       })
-/*
+
       app.listen(3001, () => {
         console.log('App listening port 3000 ......')
       })
-*/
+
       app.get('/api/persons', (req, res) => {
         res.json(persons)
       })  
@@ -98,10 +98,10 @@ let time = new Date()
       }})
 
   
-      const PORT = process.env.PORT || 3001
-      app.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`)
-      })
+    const PORT = process.env.PORT || 3001
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`)
+    })
 
 
 
