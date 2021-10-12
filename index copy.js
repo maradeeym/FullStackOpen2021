@@ -50,16 +50,18 @@ let time = new Date()
           })
     */
       app.get('/api/persons', (req, res) => {
-        Person.find({}).then(persons => {
-          res.json(persons)
-        })
         console.log('persons get toimii')
+        res.json(persons)
       })  
       
-      app.get('/api/persons/:id', (request, response) => {
-        Person.findById(request.params.id).then(person => {
-          response.json(person)
-        })
+    app.get('/api/persons/:id', (req, res) => {
+      const id = Number(req.params.id)
+      const person = persons.find(person => person.id === id)
+      if(person){
+      res.json(person)}
+      else {
+        res.status(404).end()
+      }
       })
     
     app.delete('/api/persons/:id', (req, res) => {
@@ -85,18 +87,18 @@ let time = new Date()
           console.log('eka error toimii')
           return res.status(400).json({ error: 'content missing' })
         }
-        
-        const person = new Person({
+        else {
+        const person = {
           name: body.name,
           number: body.number,
-        })
+          id: generateId()
+        }
+        
+        console.log('postaus toimii')
+        persons = persons.concat(person)
 
-        console.log(person)
-
-          person.save().then(addedPerson => {
-            res.json(addedPerson)
-          })
-      })
+        res.json(person)
+      }})
 
       app.put('/api/persons:id', (req, res) => {
         console.log('requesti tety...')
@@ -108,6 +110,8 @@ let time = new Date()
         }
       )
       
+
+
     const PORT = process.env.PORT
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`)
