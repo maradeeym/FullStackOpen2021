@@ -90,7 +90,7 @@ let time = new Date()
 
     app.get('/info', (req, res) => {
       Person.find({}).then(persons => {
-        res.send('<p>Phonebook has info for '+ persons.length + ' people </p> <p>'+time +'</p>')
+        res.send('Phonebook has info for '+ persons.length + ' people </p> <p>'+time +'')
       })
     })
 
@@ -101,7 +101,7 @@ let time = new Date()
         return maxId + 1
       }
       
-      app.post('/api/persons', (req, res) => {
+      app.post('/api/persons', (req, res, next) => {
         const body = req.body
         if (body.name === '' || body.number === '') {
           console.log('eka error toimii')
@@ -118,6 +118,7 @@ let time = new Date()
           person.save().then(addedPerson => {
             res.json(addedPerson)
           })
+          .catch(error => next(error))
       })
 
       app.put('/api/persons/:id', (request, response, next) => {
@@ -146,6 +147,8 @@ let time = new Date()
         console.error(error.message)
          if (error.name === 'CastError') {
           return response.status(400).send({ error: 'malformatted id' })
+        } else if (error.name === 'ValidationError') {
+          return response.status(400).json({ error: error.message })
         }
       
         next(error)
