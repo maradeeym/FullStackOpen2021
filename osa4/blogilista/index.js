@@ -1,5 +1,4 @@
-const http = require('http')
-
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const cors = require('cors')
@@ -12,11 +11,19 @@ const blogSchema = mongoose.Schema({
   likes: Number
 })
 
+blogSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+    delete returnedObject.__v
+  }
+})
+
 console.log('hello world')
 
 const Blog = mongoose.model('Blog', blogSchema)
 
-const mongoUrl = 'mongodb+srv://serkkupoika:serkkupoika@cluster0.yz1uq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+const mongoUrl = process.env.MONGODB_URI
 mongoose.connect(mongoUrl)
 
 app.use(cors())

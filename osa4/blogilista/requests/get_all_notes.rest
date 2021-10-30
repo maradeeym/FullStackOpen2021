@@ -1,7 +1,9 @@
-POST   http://localhost:3001/api/persons/
+POST   http://localhost:3003/api/blogs/
 Content-Type: application/json
 
 {
-    "name": "P4eeee",
-    "number": "12355555554"
+  "title": "String",
+  "author": "String",
+  "url": "String",
+  "likes": 5
 }
