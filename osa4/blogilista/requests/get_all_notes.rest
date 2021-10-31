@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
   "title": "RuokaBlogi",
-  "author": "Tarja",
+  "author": "SEPPO",
   "url": "www.tarjanblogi.com",
   "likes": 420420
 }
