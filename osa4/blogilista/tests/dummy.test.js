@@ -1,4 +1,29 @@
 const listHelper = require('../utils/list_helper')
+const mongoose = require('mongoose')
+const supertest = require('supertest')
+const app = require('../app')
+
+const api = supertest(app)
+
+describe('Test blogs', () => {
+
+test('blogs are returned as json', async () => {
+  await api
+    .get('/api/blogs')
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+})
+
+test('there are X amount of blogs', async () => {
+  const response = await api.get('/api/blogs')
+  expect(response.body).toHaveLength(0)
+})
+
+
+afterAll(() => {
+  mongoose.connection.close()
+})
+})
 
 test(`dummy returns ${listHelper.dummy()}`, () => {
   const blogs = []
