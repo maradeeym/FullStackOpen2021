@@ -1,9 +1,6 @@
-GET http://localhost:3003/api/blogs/
+DELETE   http://localhost:3003/api/blogs/
 Content-Type: application/json
 
 {
-  "title": "RuokaBlogi",
-  "author": "SEPPO22",
-  "url": "www.tarjanblogi.com",
-  "likes": 420420
+    "id": "6185275ca6c4e46c30cdcf30"
 }

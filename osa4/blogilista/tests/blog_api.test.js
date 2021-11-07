@@ -26,7 +26,7 @@ beforeEach(async () => {
     await blogObject.save()
 })
 
-describe('Test blogs', () => {
+describe('Testing blogs', () => {
 
     test('blogs are returned as json', async () => {
       await api
@@ -35,13 +35,13 @@ describe('Test blogs', () => {
         .expect('Content-Type', /application\/json/)
     })
   
-    test('there are X amount of blogs', async () => {
+    test('There are 2 blogs at first', async () => {
       const response = await api.get('/api/blogs')
       expect(response.body).toHaveLength(2)
     })
   
   
-    test('a valid blog can be added', async () => {
+    test('A valid blog can be added', async () => {
       const newBlog = {
         title: 'testi',
         author: 'testiauthor',
