@@ -1,6 +1,10 @@
-DELETE   http://localhost:3003/api/blogs/
+PUT http://localhost:3003/api/blogs/617bf84cf9adcd9ba0711fdb
 Content-Type: application/json
 
 {
-    "id": "6185275ca6c4e46c30cdcf30"
+  "title": "Serkku",
+  "author": "täti",
+  "url": "String",
+  "likes": 7,
+  "id": "617bf84cf9adcd9ba0711fdb"
 }
