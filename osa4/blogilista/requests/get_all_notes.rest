@@ -4,7 +4,7 @@ Content-Type: application/json
 {
   "title": "Serkku",
   "author": "täti",
-  "url": "String",
+  "url": "perss",
   "likes": 7,
   "id": "617bf84cf9adcd9ba0711fdb"
 }

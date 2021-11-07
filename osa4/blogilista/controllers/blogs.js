@@ -34,7 +34,7 @@ const body = request.body
 const blog = {
     title: body.title,
     author: body.author,
-    url: body.url
+    url: body.url,
     likes: body.likes,
 }
 
