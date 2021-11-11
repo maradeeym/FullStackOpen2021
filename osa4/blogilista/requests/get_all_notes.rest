@@ -1,10 +1,8 @@
-PUT http://localhost:3003/api/blogs/617bf84cf9adcd9ba0711fdb
+POST http://localhost:3003/api/users
 Content-Type: application/json
 
 {
-  "title": "Serkku",
-  "author": "täti",
-  "url": "perss",
-  "likes": 7,
-  "id": "617bf84cf9adcd9ba0711fdb"
+ "username": "mara",
+ "name": "maraoikee",
+ "password": "serkku"
 }
