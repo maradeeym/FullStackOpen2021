@@ -7,6 +7,20 @@ const bcrypt = require('bcrypt')
 const User = require('../models/user')
 
 
+const initialUsers = [
+    {
+        username: 'testiuseri',
+        name: 'useri',
+        password: 'salasana',
+    },
+    {
+        username: 'testiuseri2',
+        name: 'useri2',
+        password: 'salasana2',
+    },
+]
+
+
 describe('when there is initially one user at db', () => {
   beforeEach(async () => {
     await User.deleteMany({})
@@ -39,6 +53,27 @@ describe('when there is initially one user at db', () => {
     expect(usernames).toContain(newUser.username)
   })
 })
+
+describe('addtition of a new user', () => {
+
+    test('fails with status code 400 if data invalid', async () => {
+        const newUser = {
+            username: 'ma',
+            name: 'mara',  
+            password: 'se'
+            }
+
+        await api
+        .post('/api/users')
+        .send(newUser)
+        .expect(400)
+
+        const usersAtEnd = await listHelper.usersInDb()
+
+        expect(usersAtEnd).toHaveLength(initialUsers.length)
+        })
+    })
+
 
 afterAll(() => {
     mongoose.connection.close()
