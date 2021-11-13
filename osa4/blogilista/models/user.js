@@ -4,6 +4,15 @@ const userSchema = mongoose.Schema({
   username: String,
   name: String,
   passwordHash: String,
+  blogs: [
+      {
+        url: String,
+        title: String,
+        author: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Blog'
+      }
+  ],
 })
 
 userSchema.set('toJSON', {
@@ -15,4 +24,6 @@ userSchema.set('toJSON', {
   }
 })
 
-module.exports = mongoose.model('User', userSchema)
+const User = mongoose.model('User', userSchema)
+
+module.exports = User

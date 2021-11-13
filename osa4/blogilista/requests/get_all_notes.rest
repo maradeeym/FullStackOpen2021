@@ -1,8 +1,10 @@
-GET http://localhost:3003/api/users
+POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
- "username": "m4ee",
- "name": "maraoikee",
- "password": "s444"
+   "title": "selleriblogi",
+    "author": "SelleriSari",
+    "url": "sirpannblogi.com",
+    "likes": 69420,
+    "userId": "61902e11a5807362582f38ce"
 }
