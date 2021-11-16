@@ -1,10 +1,7 @@
-POST http://localhost:3003/api/blogs
+POST  http://localhost:3003/api/login
 Content-Type: application/json
 
 {
-   "title": "selleriblogi",
-    "author": "SelleriSari",
-    "url": "sirpannblogi.com",
-    "likes": 69420,
-    "userId": "61902e11a5807362582f38ce"
+   "username": "Seppo55",
+   "password": "bibbeli"
 }
