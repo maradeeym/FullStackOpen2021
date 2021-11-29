@@ -1,10 +1,10 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1hcmtrdSIsImlkIjoiNjE5NDA4YTIwNmU0NDFhMTE4OTNmYTFiIiwiaWF0IjoxNjM3MDkxNTQ3fQ.A7bnXwjICG4SasOcgVmvuTY8SS92QKf2vSMqzbZ0Zzs
+authorization: bearer neyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1hcmtrdSIsImlkIjoiNjE5NDA4YTIwNmU0NDFhMTE4OTNmYTFiIiwiaWF0IjoxNjM3MDkxNTQ3fQ.A7bnXwjICG4SasOcgVmvuTY8SS92QKf2vSMqzbZ0Zzs
 
 {
-    "title": "MarkunBlogi",
-    "author": "Margu",
-    "url": "www.markunruokablogi.com",
-    "likes": 69420
+    "title": "MarkunMuotiBlogi",
+    "author": "MargguKahellaGeellä",
+    "url": "www.markunmuotiblogi.com",
+    "likes": 8008
 }

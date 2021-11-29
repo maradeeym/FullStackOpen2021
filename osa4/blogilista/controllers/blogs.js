@@ -19,23 +19,24 @@ const getTokenFrom = request => {
     return null
     }
 
-
 blogsRouter.post('/', async (request, response) => {
     const body = request.body
+    console.log(body)
+    //Token joka varmistaa käyttäjän identiteetin
     const token = getTokenFrom(request)
     const decodedToken = jwt.verify(token, process.env.SECRET)
     if (!token || !decodedToken.id) {
         return response.status(401).json({ error: 'token missing or invalid' })
     }
-    
+
     const user = await User.findById(decodedToken.id)
 
     const blog = new Blog({
         title: body.title,
         author: body.author,
         url: body.url,
-        likes: body.likes,
-        user: user._id,
+        likes: body.likes | 0,
+        user: user.id,
     })
 
     const savedBlog = await blog.save()
