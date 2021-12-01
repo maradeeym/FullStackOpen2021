@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
+import BlogForm from './components/BlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -17,8 +18,17 @@ const App = () => {
       const initialBlogs = await blogService.getAll();
       setBlogs(initialBlogs);
     };
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
+
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+      blogService.setToken(user.token)
+    }
+  }, [])
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -28,7 +38,10 @@ const App = () => {
     const user = await loginService.login({
       username, password,
     })
-    window.localStorage.setItem("loggedBlogUser", JSON.stringify(user));
+
+    window.localStorage.setItem("loggedBlogUser", JSON.stringify(user)
+    )
+    blogService.setToken(user.token)
     setUser(user)
     setUsername('')
     setPassword('')
@@ -39,6 +52,7 @@ const App = () => {
     }, 2000)
   }
 }
+//Adding blog
 
 const handleLogout = () => {
   window.localStorage.removeItem("loggedBlogUser");
@@ -70,24 +84,21 @@ const handleLogout = () => {
     </form>      
   )
 
-/*
-  const blogForm = () => (
-    <form onSubmit={addNote}>
-      <input
-        value={newNote}
-        onChange={handleNoteChange}
-      />
-      <button type="submit">save</button>
-    </form>  
-  )
-*/
-
-    console.log(user)
-    console.log(blogs.map((blog) => (
-      <Blog key={blog.id} blog={blog}/>)))
-  
-
-    
+  const addBlog = async (blogObject) => {
+    if (
+      blogObject.title !== "" &&
+      blogObject.author !== "" &&
+      blogObject.url !== ""
+    ) {
+      const newBlog = await blogService.create(blogObject);
+      setBlogs(blogs.concat(newBlog));
+  } else {
+    setErrorMessage('something wen wrong bro')
+    setTimeout(() => {
+    setErrorMessage(null)
+    }, 3000)
+  }
+}
 
   return (
     <div>
@@ -104,6 +115,7 @@ const handleLogout = () => {
       ) : (
       <>
         <div>
+        <BlogForm createBlog={addBlog}/>
             {blogs
               .filter((blog) => blog.user.username === user.username)
               .map((blog) => (
