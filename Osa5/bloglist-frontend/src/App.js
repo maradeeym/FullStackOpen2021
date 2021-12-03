@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
 import BlogForm from './components/BlogForm'
+import LoginForm from './components/LoginForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -11,6 +12,7 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+  const [loginVisible, setLoginVisible] = useState(false)
 
 
   useEffect(() => {
@@ -59,31 +61,6 @@ const handleLogout = () => {
   document.location.reload();
 }
 
-  const loginForm = () => (
-    <form onSubmit={handleLogin}>
-      <h2>log in to application</h2>
-      <div>
-        username
-          <input
-          type="text"
-          value={username}
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
-      </div>
-      <div>
-        password
-          <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button type="submit">login</button>
-    </form>      
-  )
-
   const addBlog = async (blogObject) => {
     if (
       blogObject.title !== "" &&
@@ -100,6 +77,23 @@ const handleLogout = () => {
   }
 }
 
+const blogForm = () => {
+  const hideWhenVisible = { display: loginVisible ? 'none' : '' }
+  const showWhenVisible = { display: loginVisible ? '' : 'none' }
+
+  return (
+    <div>
+        <div style={hideWhenVisible}>
+          <button onClick={() => setLoginVisible(true)}>create new blog</button>
+        </div>
+        <div style={showWhenVisible}>
+        <BlogForm createBlog={addBlog}/>
+        <button onClick={() => setLoginVisible(false)}>cancel</button>
+      </div>
+    </div>
+  )
+}
+
   return (
     <div>
       {user && (
@@ -111,11 +105,17 @@ const handleLogout = () => {
       )}
       <Notification message={errorMessage} />
       {user === null ? (
-      loginForm()
+      <LoginForm 
+      handleLogin={handleLogin}
+      username={username}
+      password={password}
+      setUsername={setUsername}
+      setPassword={setPassword}
+      /> 
       ) : (
       <>
         <div>
-        <BlogForm createBlog={addBlog}/>
+        {blogForm()}
             {blogs
               .filter((blog) => blog.user.username === user.username)
               .map((blog) => (
