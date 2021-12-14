@@ -113,8 +113,6 @@ const App = () => {
     setBlogs(blogs.filter((blog) => blog.id !== blogId))
   }
 
-  console.log(blogs.sort((a, b) => b.likes - a.likes))
-
   return (
     <div>
       {user && (

@@ -1,5 +1,5 @@
 import React from "react"
-import PropTypes from "prop-types"
+//import PropTypes from "prop-types"
 import Togglable from "./Togglable"
 
 const blogStyle = {
@@ -26,7 +26,7 @@ const Blog = ( { blog, blogUpdate, blogRemove } ) => {
     <div style={blogStyle}>
       <div>
         {blog.title} {blog.author}
-        <Togglable buttonLabel="View" cancelButtonLabel="Hide">
+        <Togglable buttonLabel="view" cancelButtonLabel="hide">
           <p>Url: {blog.url}</p>
           <p>Likes: {blog.likes}<button onClick={likeHandler}>like</button></p>
           <p>User: {blog.user.name}</p>
@@ -35,9 +35,9 @@ const Blog = ( { blog, blogUpdate, blogRemove } ) => {
       </div>
     </div>
   )}
-
+/*
 Blog.propTypes = {
   blog: PropTypes.string.isRequired
 }
-
+*/
 export default Blog
